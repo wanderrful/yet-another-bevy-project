@@ -6,7 +6,7 @@ use crate::core::controller::PlayerControllerPlugin;
 use crate::maps::main_menu::MainMenuScenePlugin;
 use crate::maps::simple_scene2::SimpleScene2Plugin;
 use crate::maps::simple_scene::SimpleScenePlugin;
-use crate::ui::counter::plugin::CounterUIPlugin;
+use crate::ui::counter::plugin::UICounterPlugin;
 use crate::ui::gameplay::plugin::UIGameplayPlugin;
 use crate::ui::main_menu::main_menu::UIMainMenuPlugin;
 
@@ -31,7 +31,7 @@ impl Plugin for GamePlugin {
             .add_plugin(PlayerControllerPlugin)
 
             // Init and render the Gameplay UI
-            .add_plugin(CounterUIPlugin)
+            .add_plugin(UICounterPlugin)
             // .add_plugin(UIGameplayPlugin)
             // .add_plugin(UIMainMenuPlugin)
 
