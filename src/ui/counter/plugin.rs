@@ -17,13 +17,14 @@ use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 use bevy::ui::widget::Button;
 
 use crate::ui::counter::actions::{CounterActionDecrement, CounterActionIncrement};
+use crate::ui::counter::component::init_ui;
 use crate::ui::counter::facade::{handle_interaction_decrement, handle_interaction_increment};
 use crate::ui::counter::reducer::{reduce_decrement, reduce_increment};
 use crate::ui::counter::store::CounterStore;
 use crate::ui::counter::template::render_todo_text;
-use crate::ui::counter::ui::init_ui;
 
 pub struct UICounterPlugin;
+
 
 /// Provide a reference to the parent component of this UI, for querying purposes
 #[derive(Component)]

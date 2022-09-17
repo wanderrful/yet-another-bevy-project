@@ -5,8 +5,8 @@
 ///               /            |
 /// Template<----/          Reducer
 ///     ^  \                  ^
-///     |   \                 |
-///    UI    \------------->Action
+///     |   \-----\           |
+/// Component      \------->Action
 ///
 
 pub mod plugin;
@@ -16,4 +16,4 @@ mod facade;
 mod reducer;
 mod store;
 mod template;
-mod ui;
+mod component;
