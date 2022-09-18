@@ -26,10 +26,6 @@ use crate::ui::counter::template::render_todo_text;
 pub struct UICounterPlugin;
 
 
-/// Provide a reference to the parent component of this UI, for querying purposes
-#[derive(Component)]
-pub struct UICounter;
-
 impl Plugin for UICounterPlugin {
 
     fn build(&self, app: &mut App) {

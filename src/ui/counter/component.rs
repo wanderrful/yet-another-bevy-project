@@ -8,8 +8,11 @@ use bevy::ui::{FlexDirection, Size, Style, UiColor, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 
 use crate::ui::counter::actions::{CounterActionDecrement, CounterActionIncrement};
-use crate::ui::counter::plugin::UICounter;
 use crate::ui::counter::template::CounterStateRenderText;
+
+/// Provide a reference to the parent component of this UI, for querying purposes
+#[derive(Component)]
+struct UICounter;
 
 /// Insert the UI widget.
 pub fn init_ui(
