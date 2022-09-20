@@ -1,12 +1,3 @@
-/// The Effect queries or updates the database so that the Reducer can populate the Store with
-///     a more authoritative, non-cached state as a side-effect of the given Action.
-
-/// The Service pulls data from and pushes data to the source of truth.
-
-/// The Database is the authoritative data layer for everything in general.
-
-
-
 /// The Bevy Plugin that orchestrates everything
 pub use plugin::UICounterPlugin;
 
@@ -49,3 +40,9 @@ mod store;
 /// The Binding updates the View based on the Store.
 mod bindings;
 
+/// The Effect queries or updates the database so that the Reducer can populate the Store with
+///     a more authoritative, non-cached state as a side-effect of the given Action.
+
+/// The Service pulls data from and pushes data to the source of truth.
+
+/// The Database is the authoritative data layer for everything in general.
