@@ -1,6 +1,7 @@
 use bevy::ecs::event::EventWriter;
 use bevy::ecs::query::{Changed, With};
 use bevy::ecs::system::Query;
+use bevy::log::debug;
 use bevy::ui::Interaction;
 
 use crate::ui::counter::actions::CounterActionIncrement;
@@ -16,7 +17,7 @@ pub fn handle_interaction_increment(
 ) {
     button.get_single().iter()
         .filter(|it| Interaction::Clicked.eq(it))
-        .inspect(|_| bevy::log::info!("ACTION SEND: '{}'", std::any::type_name::<CounterActionIncrement>()))
+        .inspect(|_| debug!("ACTION SEND: '{}'", std::any::type_name::<CounterActionIncrement>()))
         .for_each(|_| action.send(CounterActionIncrement { delta: 1 }));
 }
 
@@ -30,6 +31,6 @@ pub fn handle_interaction_decrement(
 ) {
     button.get_single().iter()
         .filter(|it| Interaction::Clicked.eq(it))
-        .inspect(|_| bevy::log::info!("ACTION SEND: '{}'", std::any::type_name::<CounterActionIncrement>()))
+        .inspect(|_| debug!("ACTION SEND: '{}'", std::any::type_name::<CounterActionIncrement>()))
         .for_each(|it| action.send(CounterActionIncrement { delta: -1 }));
 }
