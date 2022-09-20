@@ -16,5 +16,6 @@ pub fn render_todo_text(
     mut render_text: Query<&mut Text, With<CounterStateRenderText>>,
 ) {
     render_text.get_single_mut()
-        .and_then(|mut it| Ok(it.sections[0].value = format!("Value: {}", state.get_value())));
+        .and_then(|mut it| Ok(it.sections[0].value = format!("{}", state.get_value())))
+        .unwrap();
 }

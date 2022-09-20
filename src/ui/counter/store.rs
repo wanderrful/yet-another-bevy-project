@@ -1,8 +1,6 @@
 /// Singleton: Store for the Counter UI
 pub struct CounterStore {
-
-    pub value: i32
-
+    value: i32
 }
 
 impl CounterStore {
@@ -19,7 +17,7 @@ impl CounterStore {
         self.value = self.value + amount;
     }
 
-    /// Reference the current underlying `value`
+    /// (Selector) Reference the current underlying `value`
     pub fn get_value(&self) -> i32 {
         self.value
     }

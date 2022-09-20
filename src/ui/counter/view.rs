@@ -4,15 +4,23 @@ use bevy::ecs::system::{Commands, ResMut};
 use bevy::hierarchy::BuildChildren;
 use bevy::render::color::Color;
 use bevy::text::{TextAlignment, TextStyle};
-use bevy::ui::{FlexDirection, Size, Style, UiColor, UiRect, Val};
+use bevy::ui::{AlignItems, AlignSelf, FlexDirection, JustifyContent, Size, Style, UiColor, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 
-use crate::ui::counter::actions::{CounterActionDecrement, CounterActionIncrement};
-use crate::ui::counter::template::CounterStateRenderText;
+use crate::ui::counter::bindings::CounterStateRenderText;
 
 /// Provide a reference to the parent component of this UI, for querying purposes
 #[derive(Component)]
 struct UICounter;
+
+/// Provide a reference to the "+" button
+#[derive(Component)]
+pub struct CounterActionIncreaseButtonMarker;
+
+/// Provide a reference to the "-" button
+#[derive(Component)]
+pub struct CounterActionDecreaseButtonMarker;
+
 
 /// Insert the UI widget.
 pub fn init_ui(
@@ -30,21 +38,27 @@ impl CounterComponent {
         commands
             .spawn_bundle(self.get_parent_component())
             .insert(UICounter)
-            .with_children(|builder| {
-                builder
-                    .spawn_bundle(self.get_vertical_box())
-                    .with_children(|b| {
-                        b.spawn_bundle(self.get_text_component(server)
-                            .with_text_alignment(TextAlignment::TOP_CENTER))
-                            .insert(CounterStateRenderText);
-                    })
-                    .with_children(|b| {
-                        b.spawn_bundle(self.get_horizontal_box())
-                            .with_children(|builder| {
-                                builder.spawn_bundle(self.get_button(Color::GREEN.into()))
-                                    .insert(CounterActionIncrement);
-                                builder.spawn_bundle(self.get_button(Color::RED.into()))
-                                    .insert(CounterActionDecrement);
+            .with_children(|b0| {
+                b0.spawn_bundle(self.get_vertical_box())
+                    .with_children(|b1| {
+                        b1.spawn_bundle(self.get_horizontal_box())
+                            .with_children(|b2| {
+                                b2.spawn_bundle(self.get_text_component(&server, "Value: "));
+                                b2.spawn_bundle(self.get_text_component(&server, "X"))
+                                    .insert(CounterStateRenderText);
+                            });
+                        b1.spawn_bundle(self.get_horizontal_box())
+                            .with_children(|b2| {
+                                b2.spawn_bundle(self.get_button(Color::GREEN.into()))
+                                    .insert(CounterActionIncreaseButtonMarker)
+                                    .with_children(|b3| {
+                                        b3.spawn_bundle(self.get_text_component(&server, "+"));
+                                    });
+                                b2.spawn_bundle(self.get_button(Color::RED.into()))
+                                    .insert(CounterActionDecreaseButtonMarker)
+                                    .with_children(|b3| {
+                                        b3.spawn_bundle(self.get_text_component(&server, "-"));
+                                    });
                             });
                     });
             });
@@ -54,9 +68,11 @@ impl CounterComponent {
         NodeBundle {
             color: Color::hsla(0.1, 0.1, 0.1, 0.3).into(),
             style: Style {
-                size: Size::new(Val::Percent(30.0), Val::Undefined),
+                size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
                 margin: self.get_margin(),
                 flex_direction: FlexDirection::ColumnReverse,
+                justify_content: JustifyContent::SpaceAround,
+                align_items: AlignItems::Center,
                 ..Default::default()
             },
             ..Default::default()
@@ -82,6 +98,8 @@ impl CounterComponent {
                 size: Size::new(Val::Auto, Val::Undefined),
                 margin: self.get_margin(),
                 flex_direction: FlexDirection::ColumnReverse,
+                justify_content: JustifyContent::SpaceAround,
+                align_items: AlignItems::Center,
                 ..Default::default()
             },
             ..Default::default()
@@ -92,24 +110,31 @@ impl CounterComponent {
         NodeBundle {
             color: Color::hsla(0.1, 0.1, 0.1, 0.3).into(),
             style: Style {
-                size: Size::new(Val::Undefined, Val::Auto),
+                size: Size::new(Val::Auto, Val::Auto),
                 margin: self.get_margin(),
                 flex_direction: FlexDirection::Row,
+                justify_content: JustifyContent::SpaceAround,
+                align_items: AlignItems::Center,
                 ..Default::default()
             },
             ..Default::default()
         }
     }
 
-    fn get_text_component(&self, server: ResMut<AssetServer>) -> TextBundle {
+    fn get_text_component(&self, server: &ResMut<AssetServer>, text: &str) -> TextBundle {
         TextBundle::from_section(
-            "DEFAULT TEXT",
+            text,
             TextStyle {
                 font: server.load("fonts/FiraSans-Bold.ttf"),
                 font_size: self.get_font_size(),
                 color: Color::WHITE,
-            }
-        )
+            })
+            .with_text_alignment(TextAlignment::CENTER)
+            .with_style(Style {
+                align_self: AlignSelf::Center,
+                padding: self.get_margin(),
+                ..Default::default()
+            })
     }
 
     fn get_font_size(&self) -> f32 {

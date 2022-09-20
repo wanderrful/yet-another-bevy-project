@@ -1,9 +1,7 @@
 use bevy::ecs::component::Component;
 
-/// Marker for the increment button
-#[derive(Component)]
-pub struct CounterActionIncrement;
-
-/// Marker for the decrement button
-#[derive(Component)]
-pub struct CounterActionDecrement;
+/// Event for mutating the counter's value
+pub struct CounterActionIncrement {
+    // By how much to increment
+    pub delta: i32
+}
