@@ -11,7 +11,7 @@ use crate::ui::counter::bindings::CounterStateRenderText;
 
 /// Provide a reference to the parent component of this UI, for querying purposes
 #[derive(Component)]
-struct UICounter;
+struct UICounterParentMarker;
 
 /// Provide a reference to the "+" button
 #[derive(Component)]
@@ -23,11 +23,8 @@ pub struct CounterActionDecreaseButtonMarker;
 
 
 /// Insert the UI widget.
-pub fn init_ui(
-    mut commands: Commands,
-    mut asset_server: ResMut<AssetServer>
-) {
-    CounterComponent{}.init(commands, asset_server);
+pub fn init_ui(mut commands: Commands, mut server: ResMut<AssetServer>) {
+    CounterComponent{}.init(commands, server);
 }
 
 struct CounterComponent;
@@ -37,7 +34,7 @@ impl CounterComponent {
     pub fn init(&self, mut commands: Commands, mut server: ResMut<AssetServer>) {
         commands
             .spawn_bundle(self.get_parent_component())
-            .insert(UICounter)
+            .insert(UICounterParentMarker)
             .with_children(|b0| {
                 b0.spawn_bundle(self.get_vertical_box())
                     .with_children(|b1| {

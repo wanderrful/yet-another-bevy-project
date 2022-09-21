@@ -9,6 +9,7 @@ use crate::maps::simple_scene::SimpleScenePlugin;
 use crate::ui::counter::UICounterPlugin;
 use crate::ui::gameplay::plugin::UIGameplayPlugin;
 use crate::ui::main_menu::main_menu::UIMainMenuPlugin;
+use crate::ui::mainmenu::MainMenuPlugin;
 
 mod default;  // provided by the starter template
 
@@ -31,7 +32,9 @@ impl Plugin for GamePlugin {
             .add_plugin(PlayerControllerPlugin)
 
             // Init and render the Gameplay UI
-            .add_plugin(UICounterPlugin)
+            // .add_plugin(UICounterPlugin)
+            .add_plugin(MainMenuPlugin)
+
             // .add_plugin(UIGameplayPlugin)
             // .add_plugin(UIMainMenuPlugin)
 
