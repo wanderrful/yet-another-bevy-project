@@ -16,12 +16,19 @@ use bevy::math::Vec3;
 use bevy::transform::components::Transform;
 
 use crate::core::level_manager::{ExitLevel, LevelManagerPlugin, LevelName};
+use crate::ui::counter::CounterActionMenuSetVisibility;
+use crate::ui::mainmenu::MainMenuActionMenuSetVisibility;
 
 pub struct PlayerControllerPlugin;
 
 impl Plugin for PlayerControllerPlugin {
     fn build(&self, app: &mut App) {
         app
+            // NOTE | Even though this is defined in another Plugin, it's not guaranteed at runtime,
+            //  and so we must add it as a dependency to this plugin so that we can work with it.
+            .add_event::<CounterActionMenuSetVisibility>()
+            .add_event::<MainMenuActionMenuSetVisibility>()
+
             .add_startup_system(spawn_camera)
             .add_system(handle_input)
             .add_plugin(LevelManagerPlugin);
@@ -40,7 +47,9 @@ fn spawn_camera(mut commands: Commands) {
 /// DEBUG - Invoke the level switching behaviors manually.
 fn handle_input(
     keys: Res<Input<KeyCode>>,
-    mut exit_level: EventWriter<ExitLevel>
+    mut exit_level: EventWriter<ExitLevel>,
+    mut toggle_counter_menu: EventWriter<CounterActionMenuSetVisibility>,
+    mut toggle_main_menu: EventWriter<MainMenuActionMenuSetVisibility>
 ) {
     if keys.just_pressed(KeyCode::F1) {
         exit_level.send(ExitLevel(LevelName::SimpleScene1));
@@ -48,5 +57,13 @@ fn handle_input(
         exit_level.send(ExitLevel(LevelName::SimpleScene2));
     } else if keys.just_pressed(KeyCode::F3) {
         exit_level.send(ExitLevel(LevelName::MainMenu));
+    } else if keys.just_pressed(KeyCode::F5) {
+        toggle_counter_menu.send(CounterActionMenuSetVisibility{ visible: true });
+    } else if keys.just_pressed(KeyCode::F6) {
+        toggle_counter_menu.send(CounterActionMenuSetVisibility{ visible: false });
+    } else if keys.just_pressed(KeyCode::F7) {
+        toggle_main_menu.send(MainMenuActionMenuSetVisibility{ visible: true });
+    } else if keys.just_pressed(KeyCode::F8) {
+        toggle_main_menu.send(MainMenuActionMenuSetVisibility{ visible: false });
     }
 }

@@ -9,6 +9,21 @@ use bevy::text::{TextSection, TextStyle};
 use bevy::ui::{AlignItems, AlignSelf, FlexDirection, JustifyContent, Size, Style, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 
+#[derive(Component)]
+pub struct UIMainMenuParentMarker;
+
+#[derive(Component)]
+pub struct UIMainMenuPlayButtonMarker;
+
+#[derive(Component)]
+pub struct UIMainMenuOptionsButtonMarker;
+
+#[derive(Component)]
+pub struct UIMainMenuExitButtonMarker;
+
+#[derive(Component)]
+pub struct UIMainMenuAboutButtonMarker;
+
 /// Initialize the UI (Startup System)
 pub fn init_ui(mut commands: Commands, mut server: ResMut<AssetServer>) {
     MainMenuComponent{}.init(commands, server);
@@ -23,37 +38,35 @@ impl MainMenuComponent {
             .spawn_bundle(self.get_parent_component())
             .insert(UIMainMenuParentMarker)
             .with_children(|b0| {
-                b0.spawn_bundle(self.get_horizontal_box())
+                // The Game Title text
+                b0.spawn_bundle(self.get_title_component(&server));
+
+                // The Main Menu
+                b0.spawn_bundle(self.get_vertical_box())
                     .with_children(|b1| {
-                        b1.spawn_bundle(self.get_vertical_box())
+                        b1.spawn_bundle(self.get_play_button())
+                            .insert(UIMainMenuPlayButtonMarker)
                             .with_children(|b2| {
-                                b2.spawn_bundle(self.get_play_button())
-                                    .insert(UIMainMenuPlayButtonMarker)
-                                    .with_children(|b3| {
-                                        b3.spawn_bundle(self.get_text_component(&server, "Main Menu"));
-                                    });
-                                b2.spawn_bundle(self.get_options_button())
-                                    .insert(UIMainMenuOptionsButtonMarker)
-                                    .with_children(|b3| {
-                                        b3.spawn_bundle(self.get_text_component(&server, "Options"));
-                                    });
-                                b2.spawn_bundle(self.get_exit_button())
-                                    .insert(UIMainMenuExitButtonMarker)
-                                    .with_children(|b3| {
-                                        b3.spawn_bundle(self.get_text_component(&server, "Exit"));
-                                    });
+                                b2.spawn_bundle(self.get_text_component(&server, "Play"));
                             });
-                        b1.spawn_bundle(self.get_spacer())
+                        b1.spawn_bundle(self.get_options_button())
+                            .insert(UIMainMenuOptionsButtonMarker)
                             .with_children(|b2| {
-                                b2.spawn_bundle(self.get_title_component(&server));
+                                b2.spawn_bundle(self.get_text_component(&server, "Options"));
                             });
-                        b1.spawn_bundle(self.get_about_button())
-                            .insert(UIMainMenuAboutButtonMarker)
+                        b1.spawn_bundle(self.get_exit_button())
+                            .insert(UIMainMenuExitButtonMarker)
                             .with_children(|b2| {
-                                b2.spawn_bundle(self.get_text_component(&server, "About"));
+                                b2.spawn_bundle(self.get_text_component(&server, "Exit"));
                             });
                     });
 
+                // The About button
+                b0.spawn_bundle(self.get_about_button())
+                    .insert(UIMainMenuAboutButtonMarker)
+                    .with_children(|b1| {
+                        b1.spawn_bundle(self.get_text_component(&server, "About"));
+                    });
             });
     }
 
@@ -62,6 +75,9 @@ impl MainMenuComponent {
             color: Color::hsla(0.0, 0.1, 0.1, 0.1).into(),
             style: Style {
                 size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+                flex_direction: FlexDirection::ColumnReverse,
+                justify_content: JustifyContent::FlexStart,
+                align_items: AlignItems::FlexStart,
                 ..Default::default()
             },
             ..Default::default()
@@ -86,9 +102,11 @@ impl MainMenuComponent {
 
         // Configure it for this use case
         out.style = Style {
-            align_self: AlignSelf::FlexStart,
+            align_self: AlignSelf::FlexEnd,
+            margin: self.get_margin(),
             ..out.style
         };
+
 
         // Return it
         out
@@ -98,10 +116,11 @@ impl MainMenuComponent {
         let mut out = self.get_text_component(&server, "GAME TITLE HERE");
 
         out.style = Style {
-            margin: UiRect::new(Val::Auto, Val::Auto, Val::Percent(5.0), Val::Auto),
+            margin: UiRect::new(Val::Auto, Val::Auto, Val::Percent(5.0), Val::Undefined),
+            align_self: AlignSelf::Center,
             ..out.style
         };
-        out.text.sections[0].style.font_size = 80.0;
+        out.text.sections[0].style.font_size = 100.0;
 
         out
     }
@@ -110,6 +129,7 @@ impl MainMenuComponent {
         ButtonBundle {
             color: Color::hsla(0.0, 0.0, 0.3, 0.6).into(),
             style: Style {
+                margin: UiRect::all(Val::Px(12.0)),
                 padding: self.get_margin(),
                 ..Default::default()
             },
@@ -131,13 +151,14 @@ impl MainMenuComponent {
 
     fn get_vertical_box(&self) -> NodeBundle {
         NodeBundle {
-            color: Color::hsla(0.0, 0.7, 0.1, 0.6).into(),
+            color: Color::NONE.into(),
             style: Style {
-                size: Size::new(Val::Auto, Val::Percent(40.0)),
-                margin: UiRect::new(Val::Percent(5.0), Val::Percent(0.0), Val::Percent(0.0), Val::Percent(0.0)),
                 flex_direction: FlexDirection::ColumnReverse,
                 justify_content: JustifyContent::SpaceEvenly,
                 align_items: AlignItems::Center,
+                align_self: AlignSelf::FlexStart,
+                size: Size::new(Val::Undefined, Val::Auto),
+                margin: UiRect::new(Val::Percent(5.0), Val::Auto, Val::Auto ,Val::Auto),
                 ..Default::default()
             },
             ..Default::default()
@@ -146,7 +167,7 @@ impl MainMenuComponent {
 
     fn get_horizontal_box(&self) -> NodeBundle {
         NodeBundle {
-            color: Color::hsla(0.0, 0.1, 0.1, 0.1).into(),
+            color: Color::NONE.into(),
             style: Style {
                 flex_grow: 1.0,
                 flex_direction: FlexDirection::Row,
@@ -172,7 +193,7 @@ impl MainMenuComponent {
         }
     }
 
-    fn get_font_size(&self) -> f32 { 50.0 }
+    fn get_font_size(&self) -> f32 { 60.0 }
 
     fn get_margin(&self) -> UiRect<Val> {
         UiRect::new(
@@ -184,18 +205,3 @@ impl MainMenuComponent {
     }
 
 }
-
-#[derive(Component)]
-struct UIMainMenuParentMarker;
-
-#[derive(Component)]
-struct UIMainMenuPlayButtonMarker;
-
-#[derive(Component)]
-struct UIMainMenuOptionsButtonMarker;
-
-#[derive(Component)]
-struct UIMainMenuExitButtonMarker;
-
-#[derive(Component)]
-struct UIMainMenuAboutButtonMarker;

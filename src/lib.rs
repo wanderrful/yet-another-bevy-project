@@ -32,8 +32,8 @@ impl Plugin for GamePlugin {
             .add_plugin(PlayerControllerPlugin)
 
             // Init and render the Gameplay UI
-            // .add_plugin(UICounterPlugin)
-            .add_plugin(MainMenuPlugin)
+            .add_plugin(UICounterPlugin)
+            // .add_plugin(MainMenuPlugin)
 
             // .add_plugin(UIGameplayPlugin)
             // .add_plugin(UIMainMenuPlugin)

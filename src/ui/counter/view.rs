@@ -11,7 +11,7 @@ use crate::ui::counter::bindings::CounterStateRenderText;
 
 /// Provide a reference to the parent component of this UI, for querying purposes
 #[derive(Component)]
-struct UICounterParentMarker;
+pub struct UICounterParentMarker;
 
 /// Provide a reference to the "+" button
 #[derive(Component)]

@@ -16,10 +16,10 @@ use bevy::ui::{Interaction, Size, Style, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 use bevy::ui::widget::Button;
 
-use crate::ui::counter::actions::CounterActionIncrement;
+use crate::ui::counter::actions::{CounterActionIncrement, CounterActionMenuSetVisibility};
 use crate::ui::counter::bindings::render_todo_text;
 use crate::ui::counter::facade::{handle_interaction_decrement, handle_interaction_increment};
-use crate::ui::counter::reducer::reduce_increment;
+use crate::ui::counter::reducer::{reduce_increment, reduce_visibility};
 use crate::ui::counter::store::CounterStore;
 use crate::ui::counter::view::init_ui;
 
@@ -35,6 +35,7 @@ impl Plugin for UICounterPlugin {
 
             // (Actions) Declare Actions
             .add_event::<CounterActionIncrement>()
+            .add_event::<CounterActionMenuSetVisibility>()
 
             // (Facade) Map interaction to Action
             .add_system(handle_interaction_increment)
@@ -42,8 +43,9 @@ impl Plugin for UICounterPlugin {
 
             // (Reducers) Reduce Actions to changes in the Store
             .add_system(reduce_increment)
+            .add_system(reduce_visibility)
 
-            // (Template) Render front-end variables
+            // (Bindings) Render front-end variables
             .add_system(render_todo_text)
 
             // Initialize the UI widget

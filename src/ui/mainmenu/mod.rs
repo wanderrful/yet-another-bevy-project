@@ -1,3 +1,4 @@
+pub use actions::MainMenuActionMenuSetVisibility;
 pub use plugin::MainMenuPlugin;
 
 /// The MainMenu should have four buttons: Play, Options, About, and Exit:
