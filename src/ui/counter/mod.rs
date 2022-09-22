@@ -3,7 +3,7 @@ pub use actions::CounterActionMenuSetVisibility;
 /// The Bevy Plugin that orchestrates everything
 pub use plugin::UICounterPlugin;
 
-/// Following the NgRx architecture: https://dev.to/jagadeeshmusali/angular-ngrx-state-management-lifecycle-simplified-khl
+/// Following the NgRx architecture: https://ngrx.io/guide/store
 ///
 ///   Binding <--------------Store      Database
 ///     |                      ^           ^
@@ -14,10 +14,6 @@ pub use plugin::UICounterPlugin;
 ///   View----> Facade----> Action <---> Effect
 ///
 ///
-/// ISSUES:
-/// - As a developer, I should be able to have multiple instances of this component: that is,
-///     the component should not assume that it is a singleton. What I need is some way to "scope"
-///     this thing, so that its Store, Events, and Components are local only to this instance.
 ///
 /// The Plugin's role is to allow the Bevy engine to bootstrap the component.
 ///
@@ -39,6 +35,11 @@ pub use plugin::UICounterPlugin;
 /// The Service pulls data from and pushes data to the source of truth.
 ///
 /// The Database is the authoritative data layer for everything in general.
+///
+/// ISSUES:
+/// - As a developer, I should be able to have multiple instances of this component: that is,
+///     the component should not assume that it is a singleton. What I need is some way to "scope"
+///     this thing, so that its Store, Events, and Components are local only to this instance.
 
 mod plugin;
 

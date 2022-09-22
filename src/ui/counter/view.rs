@@ -4,7 +4,7 @@ use bevy::ecs::system::{Commands, ResMut};
 use bevy::hierarchy::BuildChildren;
 use bevy::render::color::Color;
 use bevy::text::{TextAlignment, TextStyle};
-use bevy::ui::{AlignItems, AlignSelf, FlexDirection, JustifyContent, Size, Style, UiColor, UiRect, Val};
+use bevy::ui::{AlignItems, AlignSelf, Display, FlexDirection, JustifyContent, Size, Style, UiColor, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 
 use crate::ui::counter::bindings::CounterStateRenderText;
@@ -70,6 +70,7 @@ impl CounterComponent {
                 flex_direction: FlexDirection::ColumnReverse,
                 justify_content: JustifyContent::SpaceAround,
                 align_items: AlignItems::Center,
+                display: Display::None,
                 ..Default::default()
             },
             ..Default::default()

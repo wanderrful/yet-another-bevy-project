@@ -3,6 +3,7 @@ use bevy::ecs::event::EventReader;
 use bevy::ecs::query::With;
 use bevy::ecs::system::Query;
 use bevy::render::view::Visibility;
+use bevy::ui::{Display, Style};
 
 use crate::ui::counter::actions::CounterActionIncrement;
 use crate::ui::counter::CounterActionMenuSetVisibility;
@@ -20,12 +21,12 @@ pub fn reduce_increment(
 /// Show or hide the entire Widget
 pub fn reduce_visibility(
     mut event: EventReader<CounterActionMenuSetVisibility>,
-    mut query: Query<&mut Visibility, With<UICounterParentMarker>>
+    mut query: Query<&mut Style, With<UICounterParentMarker>>
 ) {
     event.iter().for_each(|it: &CounterActionMenuSetVisibility| {
         query.iter_mut()
-            .for_each(|mut visibility| {
-                visibility.is_visible = it.visible;
+            .for_each(|mut style| {
+                style.display = if it.visible { Display::Flex } else { Display::None };
             });
     });
 }

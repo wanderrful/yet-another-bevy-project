@@ -6,7 +6,7 @@ use bevy::ecs::system::Commands;
 use bevy::hierarchy::BuildChildren;
 use bevy::render::color::Color;
 use bevy::text::{TextSection, TextStyle};
-use bevy::ui::{AlignItems, AlignSelf, FlexDirection, JustifyContent, Size, Style, UiRect, Val};
+use bevy::ui::{AlignItems, AlignSelf, Display, FlexDirection, JustifyContent, Size, Style, UiRect, Val};
 use bevy::ui::entity::{ButtonBundle, NodeBundle, TextBundle};
 
 #[derive(Component)]
@@ -78,6 +78,7 @@ impl MainMenuComponent {
                 flex_direction: FlexDirection::ColumnReverse,
                 justify_content: JustifyContent::FlexStart,
                 align_items: AlignItems::FlexStart,
+                display: Display::None,
                 ..Default::default()
             },
             ..Default::default()
