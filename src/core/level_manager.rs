@@ -34,8 +34,13 @@ pub struct UnloadOnLevelChange;
 ///
 /// NOTE | The "LevelName" for both events below refer to the new level to which
 ///     we now want to travel!
-pub struct EnterLevel(pub LevelName);
-pub struct ExitLevel(pub LevelName);
+pub struct EnterLevel {
+    pub name: LevelName
+}
+
+pub struct ExitLevel {
+    pub name: LevelName
+}
 
 /// Enum for each level of the game.
 ///
@@ -69,7 +74,7 @@ fn unload_level(
             commands.entity(e).despawn_recursive();
         });
 
-        enter_level.send(EnterLevel(it.0));
+        enter_level.send(EnterLevel { name: it.name });
     });
 }
 

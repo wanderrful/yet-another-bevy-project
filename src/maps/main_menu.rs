@@ -18,7 +18,8 @@ fn spawn_assets(
     mut enter_level: EventReader<EnterLevel>,
 ) {
     enter_level.iter().for_each(|it| {
-        match it.0 {
+        let it: &EnterLevel = it;
+        match it.name {
            LevelName::MainMenu => {
                warn!("spawn_assets::enter_level mainmenu");
            },

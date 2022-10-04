@@ -19,13 +19,13 @@ pub use plugin::UICounterPlugin;
 ///
 /// The View is effectively the DOM and Stylesheet of the UI widget.
 ///
-/// The Facade dispatches actions to the Reducer.
+/// The Facade dispatches actions on behalf of the UI, to update the Store.
 ///
 /// The Actions' role is to invoke operations on the store.
 ///
 /// The Reducer's job is to receive Actions and mutate the Store.
 ///
-/// The Store is the core state of the component. Acts as a "local database".
+/// The Store is the core state of the UI Component. Acts as a "local database".
 ///
 /// The Binding updates the View based on the Store.
 ///

@@ -52,11 +52,11 @@ fn handle_input(
     mut toggle_main_menu: EventWriter<MainMenuActionMenuSetVisibility>
 ) {
     if keys.just_pressed(KeyCode::F1) {
-        exit_level.send(ExitLevel(LevelName::SimpleScene1));
+        exit_level.send(ExitLevel { name: LevelName::SimpleScene1 });
     } else if keys.just_pressed(KeyCode::F2) {
-        exit_level.send(ExitLevel(LevelName::SimpleScene2));
+        exit_level.send(ExitLevel { name: LevelName::SimpleScene2 });
     } else if keys.just_pressed(KeyCode::F3) {
-        exit_level.send(ExitLevel(LevelName::MainMenu));
+        exit_level.send(ExitLevel { name: LevelName::MainMenu });
     } else if keys.just_pressed(KeyCode::F5) {
         toggle_counter_menu.send(CounterActionMenuSetVisibility{ visible: true });
     } else if keys.just_pressed(KeyCode::F6) {

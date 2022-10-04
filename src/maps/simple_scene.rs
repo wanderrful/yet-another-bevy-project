@@ -31,7 +31,9 @@ fn spawn_assets(
     mut materials: ResMut<Assets<StandardMaterial>>
 ) {
     enter_level.iter().for_each(|it| {
-        match it.0 {
+        let it: &EnterLevel = it;
+
+        match it.name {
             LevelName::SimpleScene1 => {
                 warn!("Entering Simplescene1...");
 
