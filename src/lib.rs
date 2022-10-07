@@ -8,6 +8,7 @@ use crate::maps::simple_scene2::SimpleScene2Plugin;
 use crate::maps::simple_scene::SimpleScenePlugin;
 use crate::ui::counter::UICounterPlugin;
 use crate::ui::mainmenu::MainMenuPlugin;
+use crate::ui::profile::ProfileMenuPlugin;
 
 mod default;  // provided by the starter template
 
@@ -32,6 +33,7 @@ impl Plugin for GamePlugin {
             // Init and render the Gameplay UI
             .add_plugin(UICounterPlugin)
             .add_plugin(MainMenuPlugin)
+            .add_plugin(ProfileMenuPlugin)
 
             // Exit the application when the Escape button is pressed
             .add_system(bevy::window::close_on_esc);
