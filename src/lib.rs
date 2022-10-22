@@ -15,6 +15,7 @@ mod default;  // provided by the starter template
 mod core;
 mod ui;
 mod maps;
+mod services;
 
 pub struct GamePlugin;
 

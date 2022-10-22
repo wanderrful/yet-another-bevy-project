@@ -8,9 +8,11 @@ pub use plugin::UICounterPlugin;
 ///   Binding <--------------Store      Database
 ///     |                      ^           ^
 ///     |                      |           |
+///     |                      |           v
 ///     |                   Reducer     Service
 ///     |                      ^           ^
-///     v                      |           |
+///     |                      |           |
+///     v                      |           v
 ///   View----> Facade----> Action <---> Effect
 ///
 ///
