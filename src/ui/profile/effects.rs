@@ -18,8 +18,7 @@ pub fn get_user(
     mut commands: Commands,
     mut get_user_action: EventReader<actions::ProfileActionGetUserById>
 ) {
-    get_user_action.iter().for_each(|it| {
-        let it: &actions::ProfileActionGetUserById = it;
+    get_user_action.iter().for_each(|it: &actions::ProfileActionGetUserById| {
         commands.spawn().insert(services::reqres::ReqResService::get_user_by_id(it.id));
-    })
+    });
 }

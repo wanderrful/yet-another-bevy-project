@@ -18,7 +18,8 @@ pub fn reduce_increment(
     increment.iter().for_each(|it: &CounterActionIncrement| { state.increment(it.delta); });
 }
 
-/// Show or hide the entire Widget
+
+/// Show or hide the entire Widget (related to the View, not to the Store)
 pub fn reduce_visibility(
     mut event: EventReader<CounterActionMenuSetVisibility>,
     mut query: Query<&mut Style, With<UICounterParentMarker>>

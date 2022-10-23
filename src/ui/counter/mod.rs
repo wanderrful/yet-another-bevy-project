@@ -21,7 +21,7 @@ pub use plugin::UICounterPlugin;
 ///
 /// The View is effectively the DOM and Stylesheet of the UI widget.
 ///
-/// The Facade dispatches actions on behalf of the UI, to update the Store.
+/// The Facade dispatches actions on behalf of the UI.
 ///
 /// The Actions' role is to invoke operations on the store.
 ///

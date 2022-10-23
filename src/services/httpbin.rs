@@ -21,7 +21,6 @@ impl Plugin for HttpBinService {
 }
 
 impl HttpBinService {
-    /// NOTE | Creating a Task does not begin running the task.
     pub fn get_ip() -> GetIpTask {
         GetIpTask {
             task: AsyncComputeTaskPool::get().spawn(async move {

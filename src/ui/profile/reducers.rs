@@ -1,9 +1,13 @@
 use bevy::ecs::event::EventReader;
-use bevy::ecs::system::ResMut;
+use bevy::ecs::query::With;
+use bevy::ecs::system::{Query, ResMut};
+use bevy::ui::{Display, Style};
 
 use crate::services;
 use crate::ui::profile::actions;
+use crate::ui::profile::actions::ProfileActionMenuSetVisibility;
 use crate::ui::profile::store;
+use crate::ui::profile::view::UIProfileParentMarker;
 
 pub fn receive_ip(
     mut store: ResMut<store::ProfileStore>,
