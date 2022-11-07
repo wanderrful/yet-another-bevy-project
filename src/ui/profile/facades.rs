@@ -36,7 +36,10 @@ pub fn handle_refresh_user_details(
         .for_each(|_| action.send( actions::ProfileActionGetUserById { id: rand::thread_rng().gen_range(1..13) }));
 }
 
+
+
 /// Show or hide the entire Widget
+/// TODO | This is not technically a Facade, because it's updating the View in response to an Action.
 pub fn handle_set_visibility(
     mut event: EventReader<actions::ProfileActionMenuSetVisibility>,
     mut query: Query<&mut Style, With<UIProfileParentMarker>>
